@@ -1,0 +1,6 @@
+{
+  "name": "EduBot AI - O'quv Markaz Telegram Bot & Admin Panel",
+  "description": "Gemini AI integratsiyalangan Telegram bot va O'quv markaz admin boshqaruv paneli (kurslar, o'qituvchilar, ish vaqtlari, xabar yuborish)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
