@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { KNOWLEDGE_BASE, IRRELEVANT_RESPONSE } from './knowledge';
+import { KNOWLEDGE_BASE, IRRELEVANT_RESPONSE } from './knowledge.js';
 
 // Initialize Gemini Client
 export const getGeminiClient = () => {

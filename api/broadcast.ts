@@ -1,2 +1,2 @@
-import handler from './broadcasts';
+import handler from './broadcasts.js';
 export default handler;
