@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getDB, saveDB, BroadcastRecord } from './lib/db';
-import { sendTelegramMessage, sendTelegramPhoto } from './lib/bot';
-import { KNOWLEDGE_BASE } from './lib/knowledge';
+import { getDB, saveDB, BroadcastRecord } from '../lib/db';
+import { sendTelegramMessage, sendTelegramPhoto } from '../lib/bot';
+import { KNOWLEDGE_BASE } from '../lib/knowledge';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const db = getDB();

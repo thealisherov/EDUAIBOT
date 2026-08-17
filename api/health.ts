@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getDB } from './lib/db';
-import { KNOWLEDGE_BASE } from './lib/knowledge';
+import { getDB } from '../lib/db';
+import { KNOWLEDGE_BASE } from '../lib/knowledge';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   try {

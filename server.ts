@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import app from './api/index';
-import { loadDB } from './api/lib/db';
+import { loadDB } from './lib/db';
 
 // Initial DB setup
 loadDB();

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { getDB, saveDB, BroadcastRecord } from './lib/db';
-import { handleTelegramUpdate, sendTelegramMessage, sendTelegramPhoto } from './lib/bot';
-import { KNOWLEDGE_BASE } from './lib/knowledge';
+import { getDB, saveDB, BroadcastRecord } from '../lib/db';
+import { handleTelegramUpdate, sendTelegramMessage, sendTelegramPhoto } from '../lib/bot';
+import { KNOWLEDGE_BASE } from '../lib/knowledge';
 
 const app = express();
 app.use(express.json());
