@@ -1,32 +1,32 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { getDB, saveDB } from './lib/db.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const db = getDB();
+  const token = db.telegramConfig.token || process.env.TELEGRAM_BOT_TOKEN;
 
   if (!token) {
-    return res.status(400).json({ error: "TELEGRAM_BOT_TOKEN not configured" });
+    return res.status(400).json({ success: false, error: "TELEGRAM_BOT_TOKEN not configured" });
   }
 
   if (req.method === 'GET') {
-    // Get webhook info
     try {
       const response = await fetch(`https://api.telegram.org/bot${token}/getWebhookInfo`);
       const data = await response.json();
       return res.status(200).json({ success: true, data });
     } catch (err: any) {
-      return res.status(500).json({ error: err.message });
+      return res.status(500).json({ success: false, error: err.message });
     }
   }
 
   if (req.method === 'POST') {
-    const { webhookUrl } = req.body;
+    const webhookUrl = req.body.url || req.body.webhookUrl;
 
     if (!webhookUrl) {
-      return res.status(400).json({ error: "webhookUrl is required" });
+      return res.status(400).json({ success: false, error: "webhookUrl is required" });
     }
 
     try {
-      // Set webhook
       const response = await fetch(`https://api.telegram.org/bot${token}/setWebhook`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,6 +39,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const data = await response.json();
 
       if (data.ok) {
+        db.telegramConfig.isWebhookSet = true;
+        db.telegramConfig.webhookUrl = webhookUrl;
+        saveDB();
         return res.status(200).json({ 
           success: true, 
           message: "Webhook set successfully",
@@ -52,7 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
       }
     } catch (err: any) {
-      return res.status(500).json({ error: err.message });
+      return res.status(500).json({ success: false, error: err.message });
     }
   }
 

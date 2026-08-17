@@ -53,24 +53,45 @@ export default function App() {
         logsRes,
         configRes
       ] = await Promise.all([
-        fetch('/api/stats').then(r => r.json()),
-        fetch('/api/center-info').then(r => r.json()),
-        fetch('/api/courses').then(r => r.json()),
-        fetch('/api/teachers').then(r => r.json()),
-        fetch('/api/users').then(r => r.json()),
-        fetch('/api/broadcasts').then(r => r.json()),
-        fetch('/api/logs').then(r => r.json()),
-        fetch('/api/telegram/config').then(r => r.json()),
+        fetch('/api/stats').then(r => r.json()).catch(() => null),
+        fetch('/api/center-info').then(r => r.json()).catch(() => null),
+        fetch('/api/courses').then(r => r.json()).catch(() => null),
+        fetch('/api/teachers').then(r => r.json()).catch(() => null),
+        fetch('/api/users').then(r => r.json()).catch(() => null),
+        fetch('/api/broadcasts').then(r => r.json()).catch(() => null),
+        fetch('/api/logs').then(r => r.json()).catch(() => null),
+        fetch('/api/telegram/config').then(r => r.json()).catch(() => null),
       ]);
 
-      if (statsRes.success) setStats(statsRes.stats);
-      if (centerRes.success) setCenterInfo(centerRes.data);
-      if (coursesRes.success) setCourses(coursesRes.data);
-      if (teachersRes.success) setTeachers(teachersRes.data);
-      if (usersRes.success) setUsers(usersRes.data);
-      if (broadcastsRes.success) setBroadcasts(broadcastsRes.data);
-      if (logsRes.success) setLogs(logsRes.data);
-      if (configRes.success) setBotConfig(configRes.data);
+      if (statsRes) {
+        setStats(statsRes.stats || statsRes);
+      }
+      if (centerRes) {
+        setCenterInfo(centerRes.data || centerRes.centerInfo || centerRes);
+      }
+      if (coursesRes) {
+        const rawCourses = coursesRes.data || coursesRes.courses || coursesRes;
+        setCourses(Array.isArray(rawCourses) ? rawCourses : []);
+      }
+      if (teachersRes) {
+        const rawTeachers = teachersRes.data || teachersRes.teachers || teachersRes;
+        setTeachers(Array.isArray(rawTeachers) ? rawTeachers : []);
+      }
+      if (usersRes) {
+        const rawUsers = usersRes.data || usersRes.users || usersRes;
+        setUsers(Array.isArray(rawUsers) ? rawUsers : []);
+      }
+      if (broadcastsRes) {
+        const rawBroadcasts = broadcastsRes.data || broadcastsRes.broadcasts || broadcastsRes;
+        setBroadcasts(Array.isArray(rawBroadcasts) ? rawBroadcasts : []);
+      }
+      if (logsRes) {
+        const rawLogs = logsRes.data || logsRes.logs || logsRes;
+        setLogs(Array.isArray(rawLogs) ? rawLogs : []);
+      }
+      if (configRes) {
+        setBotConfig(configRes.data || configRes.config || configRes);
+      }
     } catch (err: any) {
       console.error("Fetch error:", err);
       setError("Server bilan aloqa o'rnatishda xatolik yuz berdi. Iltimos qayta yuklang.");
@@ -91,8 +112,8 @@ export default function App() {
       body: JSON.stringify(updated)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Saqlashda xatolik");
-    setCenterInfo(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "Saqlashda xatolik");
+    if (data.data) setCenterInfo(data.data);
     fetchAllData();
   };
 
@@ -104,8 +125,7 @@ export default function App() {
       body: JSON.stringify(course)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Kurs qo'shishda xatolik");
-    setCourses(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "Kurs qo'shishda xatolik");
     fetchAllData();
   };
 
@@ -116,16 +136,14 @@ export default function App() {
       body: JSON.stringify(course)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Tahrirlashda xatolik");
-    setCourses(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "Tahrirlashda xatolik");
     fetchAllData();
   };
 
   const handleDeleteCourse = async (id: string) => {
     const res = await fetch(`/api/courses/${id}`, { method: 'DELETE' });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "O'chirishda xatolik");
-    setCourses(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "O'chirishda xatolik");
     fetchAllData();
   };
 
@@ -137,8 +155,7 @@ export default function App() {
       body: JSON.stringify(teacher)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "O'qituvchi qo'shishda xatolik");
-    setTeachers(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "O'qituvchi qo'shishda xatolik");
     fetchAllData();
   };
 
@@ -149,16 +166,14 @@ export default function App() {
       body: JSON.stringify(teacher)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Tahrirlashda xatolik");
-    setTeachers(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "Tahrirlashda xatolik");
     fetchAllData();
   };
 
   const handleDeleteTeacher = async (id: string) => {
     const res = await fetch(`/api/teachers/${id}`, { method: 'DELETE' });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "O'chirishda xatolik");
-    setTeachers(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "O'chirishda xatolik");
     fetchAllData();
   };
 
@@ -170,8 +185,7 @@ export default function App() {
       body: JSON.stringify(user)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Lid qo'shishda xatolik");
-    setUsers(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "Lid qo'shishda xatolik");
     fetchAllData();
   };
 
@@ -182,16 +196,14 @@ export default function App() {
       body: JSON.stringify(user)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Lid yangilashda xatolik");
-    setUsers(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "Lid yangilashda xatolik");
     fetchAllData();
   };
 
   const handleDeleteUser = async (id: string) => {
     const res = await fetch(`/api/users/${id}`, { method: 'DELETE' });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "O'chirishda xatolik");
-    setUsers(data.data);
+    if (!data.success && data.error) throw new Error(data.error || "O'chirishda xatolik");
     fetchAllData();
   };
 
@@ -210,7 +222,7 @@ export default function App() {
       body: JSON.stringify(payload)
     });
     const data = await res.json();
-    if (!data.success) throw new Error(data.error || "Xabar yuborishda xatolik");
+    if (!data.success && data.error) throw new Error(data.error || "Xabar yuborishda xatolik");
     fetchAllData();
   };
 

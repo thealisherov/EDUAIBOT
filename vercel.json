@@ -1,25 +1,15 @@
 {
+  "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "env": {
-    "TELEGRAM_BOT_TOKEN": "@TELEGRAM_BOT_TOKEN",
-    "GEMINI_API_KEY": "@GEMINI_API_KEY",
-    "APP_URL": "@APP_URL"
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "destination": "/api/index"
     },
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x",
-      "memory": 128
-    }
-  }
+  ]
 }

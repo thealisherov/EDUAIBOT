@@ -356,15 +356,15 @@ export async function POST(req: NextRequest) {
           </div>
         </div>
       ) : (
-        /* Vercel & Next.js Deployment Guide */
+        /* Vercel Direct Deployment Guide */
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-sm space-y-6">
           <div>
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Code2 className="w-5 h-5 text-blue-400" />
-              <span>Next.js & Vercel Deployment Bo'yicha To'liq Qo'llanma</span>
+              <span>Vercel Platformasiga 100% Deploy Qilish Qo'llanmasi</span>
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              Ushbu tizimni to'liq Next.js (App Router) loyihasiga aylantirib, Vercel platformasiga 1 daqiqada deploy qilish mumkin.
+              Loyiha Frontend (React + Vite) va Backend Serverless Functions (Telegram Bot Webhook + Gemini AI) uchun 100% tayyorlangan.
             </p>
           </div>
 
@@ -374,46 +374,44 @@ export async function POST(req: NextRequest) {
               1. Vercel Environment Variables (Muhit O'zgaruvchilari)
             </h4>
             <p className="text-xs text-slate-400">
-              Vercel loyihangizning <b>Settings &gt; Environment Variables</b> bo'limiga quyidagi o'zgaruvchilarni qo'shing:
+              Vercel loyihangizning <b>Settings &gt; Environment Variables</b> bo'limiga quyidagi kalitlarni kiriting:
             </p>
-            <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-xs text-emerald-400 space-y-1">
-              <div>GEMINI_API_KEY="AIzaSy..."</div>
-              <div>TELEGRAM_BOT_TOKEN="123456789:ABC-..."</div>
+            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-emerald-400 space-y-2">
+              <div className="flex justify-between items-center">
+                <span>GEMINI_API_KEY="your_gemini_api_key"</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>TELEGRAM_BOT_TOKEN="your_telegram_bot_token"</span>
+              </div>
+              <div className="flex justify-between items-center text-blue-400">
+                <span>APP_URL="https://sizning-loyihangiz.vercel.app"</span>
+              </div>
             </div>
           </div>
 
-          {/* Step 2: Next.js API Route Handler */}
+          {/* Step 2: Vercel Deploy */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                2. Next.js Webhook Handler: <code>app/api/telegram/route.ts</code>
-              </h4>
-              <button
-                onClick={() => copyToClipboard(nextJsRouteCode, 'nextjs')}
-                className="flex items-center gap-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700"
-              >
-                {copiedCode === 'nextjs' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCode === 'nextjs' ? "Nusxalandi!" : "Kodni nusxalash"}</span>
-              </button>
-            </div>
-
-            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-x-auto">
-              <pre className="text-[11px] font-mono text-slate-300 leading-relaxed">
-                {nextJsRouteCode}
-              </pre>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              2. GitHub yoki Vercel CLI orqali Deploy qilish
+            </h4>
+            <p className="text-xs text-slate-400">
+              Ushbu repositoryni GitHub-ga yuklang va <b>Vercel Dashboard</b> orqali <b>Import Project</b> qiling (yoki terminalda <code>vercel --prod</code> buyrug'ini bering).
+            </p>
+            <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-xs text-slate-300">
+              git add . &amp;&amp; git commit -m "100% Vercel deployment ready" &amp;&amp; git push
             </div>
           </div>
 
           {/* Step 3: Set Webhook on Vercel */}
           <div className="space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
-              3. Vercel Webhookni Faollashtirish
+              3. Webhookni 1 Bosqichda Bog'lash
             </h4>
             <p className="text-xs text-slate-400">
-              Loyihangiz Vercelga deploy bo'lgach (masalan: <code>https://my-edubot.vercel.app</code>), Telegram botingizga ushbu havolani yuboring:
+              Deploy muvaffaqiyatli yakunlangach, Vercel bergan URL manzilida ushbu Admin Panelni oching va <b>"Webhookni Telegramga Bog'lash"</b> tugmasini bosing!
             </p>
             <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-xs text-blue-400">
-              https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/setWebhook?url=https://my-edubot.vercel.app/api/telegram
+              Webhook manzili avtomatik ravishda: https://&lt;your-app&gt;.vercel.app/api/telegram/webhook qilib ulanadi.
             </div>
           </div>
         </div>
