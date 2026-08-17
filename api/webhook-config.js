@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
 
   if (!token) {
@@ -55,4 +55,4 @@ export default async function handler(req, res) {
   }
 
   res.status(405).json({ error: 'Method not allowed' });
-}
+};
