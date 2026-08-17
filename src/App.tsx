@@ -17,7 +17,7 @@ import {
   ChevronRight,
   MessageSquare
 } from 'lucide-react';
-import type { BroadcastMessage, TelegramBotConfig, BroadcastStats } from './types.ts';
+import type { BroadcastMessage, TelegramBotConfig, BroadcastStats } from './types';
 
 export default function App() {
   const [stats, setStats] = useState<BroadcastStats | null>(null);

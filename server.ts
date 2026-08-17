@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
-import app from './api/index.ts';
-import { loadDB } from './api/lib/db.ts';
+import app from './api/index';
+import { loadDB } from './api/lib/db';
 
 // Initial DB setup
 loadDB();

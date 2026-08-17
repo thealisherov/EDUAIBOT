@@ -1,6 +1,6 @@
-import { getDB, addOrUpdateSubscriber } from './db.ts';
-import { askGemini } from './gemini.ts';
-import { KNOWLEDGE_BASE } from './knowledge.ts';
+import { getDB, addOrUpdateSubscriber } from './db';
+import { askGemini } from './gemini';
+import { KNOWLEDGE_BASE } from './knowledge';
 
 // Helper: Send Message to Telegram API
 export async function sendTelegramMessage(
